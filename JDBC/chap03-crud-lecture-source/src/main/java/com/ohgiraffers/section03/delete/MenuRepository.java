@@ -1,8 +1,7 @@
-package com.ohgiraffers.section01.insert;
+package com.ohgiraffers.section03.delete;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,10 +10,8 @@ import java.util.Properties;
 
 import static com.ohgiraffers.common.JDBCTemplate.close;
 
-/* Repository 계층
- * DBMS를 통해 수행 되는 CRUD 작업 단위의 메소드를 정의 */
 public class MenuRepository {
-    public int insertMenu(Connection con, Menu menu) {
+    public int deleteMenu(Connection con, Menu menu) {
         PreparedStatement pstmt = null;
         Properties properties = new Properties();
         int result = 0;
@@ -23,13 +20,10 @@ public class MenuRepository {
             properties.loadFromXML(new FileInputStream(
                     "src/main/java/com/ohgiraffers/mapper/MenuMapper.xml"
             ));
-            String sql = properties.getProperty("insertMenu");
+            String sql = properties.getProperty("deleteMenu");
             pstmt = con.prepareStatement(sql);
 
-            pstmt.setString(1, menu.getMenuName());
-            pstmt.setInt(2, menu.getMenuPrice());
-            pstmt.setInt(3, menu.getCategoryCode());
-            pstmt.setString(4, menu.getOrderableStatus());
+            pstmt.setInt(1, menu.getMenuCode());
 
             result = pstmt.executeUpdate();
         } catch (SQLException e) {

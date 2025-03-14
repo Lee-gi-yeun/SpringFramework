@@ -13,7 +13,7 @@ public class Application2 {
         System.out.print("카테고리 코드 : ");
         int categoryCode = sc.nextInt();
         System.out.print("판매 상태 : ");
-        String orderableStatus = sc.nextLine();
+        String orderableStatus = sc.next();
 
         Menu menu = new Menu(menuName, menuPrice, categoryCode, orderableStatus);
 
