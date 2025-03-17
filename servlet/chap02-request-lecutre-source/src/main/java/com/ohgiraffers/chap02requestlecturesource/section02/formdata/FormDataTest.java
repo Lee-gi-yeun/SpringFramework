@@ -1,4 +1,4 @@
-package com.ohgiraffers.chap02requestlecutresource.section02.formdata;
+package com.ohgiraffers.chap02requestlecturesource.section02.formdata;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

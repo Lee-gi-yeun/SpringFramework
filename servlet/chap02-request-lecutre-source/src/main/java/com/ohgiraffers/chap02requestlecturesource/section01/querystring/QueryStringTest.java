@@ -1,4 +1,4 @@
-package com.ohgiraffers.chap02requestlecutresource.section01.querystring;
+package com.ohgiraffers.chap02requestlecturesource.section01.querystring;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @WebServlet(value = "/querystring")

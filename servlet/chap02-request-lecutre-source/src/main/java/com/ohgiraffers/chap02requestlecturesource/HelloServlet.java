@@ -1,4 +1,4 @@
-package com.ohgiraffers.chap02requestlecutresource;
+package com.ohgiraffers.chap02requestlecturesource;
 
 import java.io.*;
 
