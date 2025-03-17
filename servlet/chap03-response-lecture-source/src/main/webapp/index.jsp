@@ -10,6 +10,8 @@
 <ul>
     <li><a href="response">응답 확인하기</a></li>
     <li><a href="headers">응답 헤더 확인하기</a></li>
+    <li><a href="show404error">404 Error</a></li>
+    <li><a href="show500error">500 Error</a></li>
 </ul>
 </body>
 </html>
