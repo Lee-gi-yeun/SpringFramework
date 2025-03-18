@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet(value = "/redirect")
 public class Redirect extends HttpServlet {
@@ -14,6 +15,10 @@ public class Redirect extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("이 서블릿으로 redirect 완료!");
 
-
+        resp.setContentType("text/html");
+        PrintWriter out = resp.getWriter();
+        out.println("<h1>이 서블릿으로 redirect 완료!</h1>");
+        out.flush();
+        out.close();
     }
 }
