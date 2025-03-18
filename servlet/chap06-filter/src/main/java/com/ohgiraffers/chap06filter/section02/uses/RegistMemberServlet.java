@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.IOException;
 
@@ -23,5 +24,13 @@ public class RegistMemberServlet extends HttpServlet {
         System.out.println("userId = " + userId);
         System.out.println("password = " + password);
         System.out.println("name = " + name);
+
+        // 암호화 된 패스워드는 동일 값이 입력 되더라고 매번 실행 시 salt에 의해 다른 값을
+        // 가지게 된다. 입력 값 동일 여부 확인은 matches 라는 메소드를 통해 확인한다
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        System.out.println("비밀번호가 pass01인가?"
+                + bCryptPasswordEncoder.matches("pass01",password));
+        System.out.println("비밀번호가 pass02인가?"
+                + bCryptPasswordEncoder.matches("pass02",password));
     }
 }

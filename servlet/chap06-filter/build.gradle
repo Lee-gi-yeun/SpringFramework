@@ -22,6 +22,11 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto
+    implementation 'org.springframework.security:spring-security-crypto:6.4.3'
+    // https://mvnrepository.com/artifact/commons-logging/commons-logging
+    implementation 'commons-logging:commons-logging:1.2'
+
     compileOnly('jakarta.servlet:jakarta.servlet-api:6.0.0')
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
