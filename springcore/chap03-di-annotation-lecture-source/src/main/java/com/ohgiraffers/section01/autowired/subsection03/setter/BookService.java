@@ -1,4 +1,4 @@
-package com.ohgiraffers.section01.autowired.subsection02.constructor;
+package com.ohgiraffers.section01.autowired.subsection03.setter;
 
 import com.ohgiraffers.section01.autowired.common.BookDAO;
 import com.ohgiraffers.section01.autowired.common.BookDTO;
@@ -8,16 +8,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 // component scan 을 통해 bean 등록, bookServiceField가 bean name
-@Service("bookServiceConstructor")
+@Service("bookServiceSetter")
 public class BookService {
 
-    private final BookDAO bookDAO;
+    private BookDAO bookDAO;
 
-//    public BookService(){}
-    @Autowired // 생성자 주입
-    // Spring 4.3 버전 이후부터 생성자가 1개 뿐이라면 어노테이션을 생략해도
-    // 자동으로 생성자 주입이 동작 된다. 단, 생성자가 1개 이상이라면 명시적으로 작성해야 한다
-    public BookService(BookDAO bookDAO) {
+    // 의존성 주입이 옵션으로 수행 될 수 있도록 처리하는데 유용하게 사용됨
+    @Autowired(required = false)
+    public void setBookDAO(BookDAO bookDAO){
         this.bookDAO = bookDAO;
     }
 

@@ -1,4 +1,4 @@
-package com.ohgiraffers.section01.autowired.subsection01.field;
+package com.ohgiraffers.section01.autowired.subsection03.setter;
 
 import com.ohgiraffers.section01.autowired.common.BookDAOImpl;
 import org.springframework.context.ApplicationContext;
@@ -9,12 +9,8 @@ public class Application {
         ApplicationContext applicationContext
                 = new AnnotationConfigApplicationContext("com.ohgiraffers.section01");
 
-        BookService bookService = applicationContext.getBean("bookServiceField", BookService.class);
+        BookService bookService = applicationContext.getBean("bookServiceSetter", BookService.class);
         System.out.println(bookService.searchBookBySequence(1));
         System.out.println(bookService.selectAllBooks());
-
-        //IoC 컨테이너 없이 BookService 코드 사용 테스트
-//        BookService bookService2 = new BookService();
-//        System.out.println(bookService2.selectAllBooks());
     }
 }
