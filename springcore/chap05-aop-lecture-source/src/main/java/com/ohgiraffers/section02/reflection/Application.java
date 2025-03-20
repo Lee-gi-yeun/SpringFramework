@@ -1,9 +1,6 @@
 package com.ohgiraffers.section02.reflection;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.*;
 
 public class Application {
     public static void main(String[] args) {
@@ -55,6 +52,21 @@ public class Application {
             // 특정 생성자를 활용해서 객체를 생성하기
             Account acc = (Account) constructors[0].newInstance("20","110-234-567890","1234",1000);
             System.out.println(acc.getBalance());
+
+            // 메소드 반환
+            Method[] methods = class1.getMethods();
+            Method getBalanceMethod = null;
+            for(Method method : methods){
+                System.out.print(Modifier.toString(method.getModifiers()) + " ");
+                System.out.print(method.getReturnType().getSimpleName() + " ");
+                System.out.println(method.getName());
+                
+                if("getBalance".equals(method.getName())){
+                    getBalanceMethod = method;
+                }
+            }
+
+            System.out.println(getBalanceMethod.invoke(constructors[2].newInstance()));
 
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
