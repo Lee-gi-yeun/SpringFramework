@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: chap01-requestmapping-lecutre-source
+server:
+  port: 8001
