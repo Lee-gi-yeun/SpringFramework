@@ -19,4 +19,11 @@ public class OtherController {
         if(check) throw new MemberRegistException("당신 같은 사람은 회원으로 받을 수 없습니다.");
         return "/";
     }
+
+    @GetMapping("/other-controller-array")
+    public String arrayExceptionTest(){
+        double[] arr = new double[0];
+        System.out.println(arr[0]);
+        return "/";
+    }
 }

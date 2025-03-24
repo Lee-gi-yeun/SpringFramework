@@ -22,4 +22,10 @@ public class GlobalExceptionHandler {
         model.addAttribute("exception", e);
         return "error/memberRegist";
     }
+
+    // 모든 타입의 Exception에 대응하기 위해 상위 타입으로 선언 된 핸들러 작성
+    @ExceptionHandler(Exception.class)
+    public String defaultExceptionHandler(Exception e){
+        return "error/default";
+    }
 }
