@@ -26,19 +26,62 @@ public class MenuService {
     }
 
     public MenuDTO selectMenuByMenuCode(int menuCode) {
-        return null;
+        SqlSession sqlSession = getSqlSession();
+
+        MenuDTO menu = menuDAO.selectMenuByMenuCode(sqlSession, menuCode);
+
+        sqlSession.close();
+
+        return menu;
     }
 
     public boolean registMenu(MenuDTO menu) {
-        return false;
+        SqlSession sqlSession = getSqlSession();
+
+        int result = menuDAO.insertMenu(sqlSession, menu);
+
+        if(result > 0){
+            sqlSession.commit();
+        } else {
+            sqlSession.rollback();
+        }
+
+        sqlSession.close();
+
+        return result > 0;
     }
 
     public boolean modifyMenu(MenuDTO menu) {
-        return false;
+        SqlSession sqlSession = getSqlSession();
+
+        int result = menuDAO.updateMenu(sqlSession,menu);
+
+        if(result > 0){
+            sqlSession.commit();
+        } else {
+            sqlSession.rollback();
+        }
+
+        sqlSession.close();
+
+        return result > 0;
     }
 
     public boolean deleteMenu(int menuCode) {
-        return false;
+
+        SqlSession sqlSession = getSqlSession();
+
+        int result = menuDAO.deleteMenu(sqlSession, menuCode);
+
+        if(result > 0){
+            sqlSession.commit();
+        } else {
+            sqlSession.rollback();
+        }
+
+        sqlSession.close();
+
+        return result > 0;
     }
 
 }

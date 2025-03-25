@@ -1,6 +1,6 @@
 package com.ohgiraffers.section02.javaconfig;
 
-public class MenuDTO {
+public class MenuDTO extends com.ohgiraffers.section03.remix.MenuDTO {
 
     private int menuCode;
     private String menuName;
