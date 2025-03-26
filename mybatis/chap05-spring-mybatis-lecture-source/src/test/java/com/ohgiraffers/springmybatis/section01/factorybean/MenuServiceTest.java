@@ -8,7 +8,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mybatis.spring.SqlSessionTemplate;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 // 단위 테스트
@@ -36,10 +40,54 @@ class MenuServiceTest {
     // 1. 주문 가능 상태 "Y"를 전달하는 테스트 시나리오
     @Test
     public void testFindAllMenuByOrderableStatus_Orderable(){
+        // given
+        String orderableStatus = "Y";
+        MenuDTO menu1 = new MenuDTO(1,"김치찌개",8000,1,"Y");
+        MenuDTO menu2 = new MenuDTO(2,"된장찌개",8000,1,"Y");
+
+        List<MenuDTO> originalList = Arrays.asList(menu1,menu2);
+        // 모의 객체 MenuMapper가 findAllMenuByOrderableStatus 기능 호출 시 originList를 반환하도록 설정
+        when(menuMapper.findAllMenuByOrderableStatus(orderableStatus)).thenReturn(originalList);
+
+        // when
+        List<MenuDTO> resultList = menuService.findAllMenuByOrderableStatus(orderableStatus);
+
+        // then
+
+        // 주어진 결과 값이 올바른 비즈니스 로직을 통해 가공 되었는지 확인
+        assertNotNull(resultList);
+        assertEquals(2, resultList.size());
+        assertEquals("김치찌개 (주문 가능)", resultList.get(0).getMenuName());
+        assertEquals("된장찌개 (주문 가능)", resultList.get(1).getMenuName());
+        // 해당 객체에서 메소드 호출 여부 확인 -> 서비스 내부의 상호작용이 기대한 대로 이루어졌는지
+        verify(sqlSession).getMapper(MenuMapper.class);
+        verify(menuMapper).findAllMenuByOrderableStatus(orderableStatus);
     }
 
     // 2. 주문 가능 상태 "N"을 전달하는 테스트 시나리오
     @Test
     public void testFindAllMenuByOrderableStatus_NotOrderable(){
+        // given
+        String orderableStatus = "N";
+        MenuDTO menu1 = new MenuDTO(1,"김치찌개",8000,1,"N");
+        MenuDTO menu2 = new MenuDTO(2,"된장찌개",8000,1,"N");
+
+        List<MenuDTO> originalList = Arrays.asList(menu1,menu2);
+        // 모의 객체 MenuMapper가 findAllMenuByOrderableStatus 기능 호출 시 originList를 반환하도록 설정
+        when(menuMapper.findAllMenuByOrderableStatus(orderableStatus)).thenReturn(originalList);
+
+        // when
+        List<MenuDTO> resultList = menuService.findAllMenuByOrderableStatus(orderableStatus);
+
+        // then
+
+        // 주어진 결과 값이 올바른 비즈니스 로직을 통해 가공 되었는지 확인
+        assertNotNull(resultList);
+        assertEquals(2, resultList.size());
+        assertEquals("김치찌개 (주문 불가능)", resultList.get(0).getMenuName());
+        assertEquals("된장찌개 (주문 불가능)", resultList.get(1).getMenuName());
+        // 해당 객체에서 메소드 호출 여부 확인 -> 서비스 내부의 상호작용이 기대한 대로 이루어졌는지
+        verify(sqlSession).getMapper(MenuMapper.class);
+        verify(menuMapper).findAllMenuByOrderableStatus(orderableStatus);
     }
 }
