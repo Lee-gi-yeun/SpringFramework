@@ -17,6 +17,8 @@ class MemberRegistServiceTest {
 
     @Autowired
     private MemberRegistService memberRegistService;
+    @Autowired
+    private MemberRepository memberRepository;
 
     private static Stream<Arguments> getMember(){
         return Stream.of(
@@ -61,6 +63,29 @@ class MemberRegistServiceTest {
 
                 assertDoesNotThrow(
                         () -> memberRegistService.registMember(newMember));
+
+    }
+
+
+    @DisplayName("프로퍼티 접근 테스트")
+    @ParameterizedTest
+    @MethodSource("getMember")
+    void testAccessProperty(
+            String memberId, String memberPwd, String memberName, String phone,
+            String address,LocalDateTime enrollDate, MemberRole memberRole, String status) {
+        MemberRegistDTO newMember = new MemberRegistDTO(
+                memberId,
+                memberPwd,
+                memberName,
+                phone,
+                address,
+                enrollDate,
+                memberRole,
+                status);
+
+        String registedName = memberRegistService.registMemberAndFindName(newMember);
+
+        assertEquals(memberName+"님", registedName);
 
     }
 

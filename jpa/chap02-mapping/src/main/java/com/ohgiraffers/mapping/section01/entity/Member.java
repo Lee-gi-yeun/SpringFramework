@@ -6,13 +6,17 @@ import java.time.LocalDateTime;
 
 @Entity(name = "entityMember")
 @Table(name = "tbl_member")
+@TableGenerator(name = "member_seq_tbl_generator", table = "tbl_my_sequence", pkColumnValue = "my_seq_member_no")
+@Access(AccessType.FIELD)   // 클래스 레벨에 작성 시 모든 필드에 대한 접근 방식 설정 (default:FIELD)
 public class Member {
 
     @Id
     @Column(name = "member_no")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "member_seq_tbl_generator")
     private int memberNo;
 
+    @Access(AccessType.FIELD)   // 필드 레벨에 작성 시 해당 필드에 대한 접근 방식 설정
     @Column(
             name = "member_id", unique = true,
             nullable = false, columnDefinition = "varchar(10)"
@@ -59,4 +63,14 @@ public class Member {
         this.status = status;
     }
 
+    @Access(AccessType.PROPERTY)    // 해당 값의 접근 방식을 getter 메소드로 변경
+    public String getMemberName() {
+        System.out.println("프로퍼티 접근 방식 사용 됨");
+        // 프로퍼티 접근 방식으로 변경한다는 것은 필드 값을 가공하는 로직이 필요하다는 의미
+        return memberName + "님";
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
 }
