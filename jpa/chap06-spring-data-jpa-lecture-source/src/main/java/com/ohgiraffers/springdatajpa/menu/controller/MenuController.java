@@ -4,6 +4,7 @@ import com.ohgiraffers.springdatajpa.menu.dto.MenuDTO;
 import com.ohgiraffers.springdatajpa.menu.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,9 @@ public class MenuController {
 
 
     @GetMapping(value = "/{menuCode}")
-    public String findMenuByCode(@PathVariable int menuCode){
+    public String findMenuByCode(@PathVariable int menuCode, Model model){
         MenuDTO resultMenu = menuService.findMenuByMenuCode(menuCode);
-        return null;
+        model.addAttribute("menu", resultMenu);
+        return "menu/detail";
     }
 }
