@@ -1,7 +1,10 @@
 package com.ohgiraffers.springdatajpa.menu.service;
 
+import com.ohgiraffers.springdatajpa.menu.dto.CategoryDTO;
 import com.ohgiraffers.springdatajpa.menu.dto.MenuDTO;
+import com.ohgiraffers.springdatajpa.menu.entity.Category;
 import com.ohgiraffers.springdatajpa.menu.entity.Menu;
+import com.ohgiraffers.springdatajpa.menu.repository.CategoryRepository;
 import com.ohgiraffers.springdatajpa.menu.repository.MenuRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -18,6 +21,7 @@ import java.util.List;
 public class MenuService {
 
     private final MenuRepository menuRepository;
+    private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper;
 
     /* DTO와 Entity의 분리
@@ -70,10 +74,23 @@ public class MenuService {
 
     // 4. 쿼리 메소드 활용
     public List<MenuDTO> findByMenuPrice(Integer menuPrice) {
-        List<Menu> menuList = menuRepository.findByMenuPriceGreaterThan(menuPrice);
+//        List<Menu> menuList = menuRepository.findByMenuPriceGreaterThan(menuPrice);
+//        List<Menu> menuList = menuRepository.findByMenuPriceGreaterThanOrderByMenuPrice(menuPrice);
+        List<Menu> menuList = menuRepository.findByMenuPriceGreaterThan(
+                menuPrice, Sort.by("menuPrice").descending());
 
         return menuList.stream()
                 .map(menu -> modelMapper.map(menu, MenuDTO.class))
+                .toList();
+    }
+
+    // 4. JPQL or Native Query
+    public List<CategoryDTO> findAllCategory() {
+
+        List<Category> categoryList = categoryRepository.findAllCategory();
+
+        return categoryList.stream()
+                .map(category -> modelMapper.map(category, CategoryDTO.class))
                 .toList();
     }
 }
