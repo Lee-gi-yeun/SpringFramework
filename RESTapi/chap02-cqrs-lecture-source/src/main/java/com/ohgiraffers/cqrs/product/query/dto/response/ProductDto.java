@@ -1,4 +1,4 @@
-package com.ohgiraffers.cqrs.product.query.dto;
+package com.ohgiraffers.cqrs.product.query.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
