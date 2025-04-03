@@ -45,10 +45,10 @@
         FROM tbl_product
         WHERE status = 'USABLE'
         <if test="categoryCode != null">
-            AND a.category_code = #{categoryCode}
+            AND category_code = #{categoryCode}
         </if>
         <if test="productName != null">
-            AND a.product_name LIKE CONCAT('%', #{productName}, '%')
+            AND product_name LIKE CONCAT('%', #{productName}, '%')
         </if>
     </select>
 </mapper>
