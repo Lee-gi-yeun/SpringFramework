@@ -10,3 +10,7 @@ mybatis:
     map-underscore-to-camel-case: true
   mapper-locations: mappers/**/*.xml
   type-aliases-package: com.ohgiraffers.cqrs.product.query.dto
+
+image:
+  image-dir: C:/upload/productimgs
+  image-url: http://localhost:8080/productimgs/

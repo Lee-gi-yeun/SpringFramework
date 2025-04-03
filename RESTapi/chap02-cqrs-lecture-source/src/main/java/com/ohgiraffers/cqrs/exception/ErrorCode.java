@@ -11,6 +11,13 @@ public enum ErrorCode {
     // 상품 관련 오류
     PRODUCT_NOT_FOUND("10001", "해당 상품을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
 
+    // 파일 관련 오류
+    FILE_SAVE_ERROR("20001","파일 저장에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+    FILE_DELETE_ERROR("20002","파일 삭제에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+
+    // 입력값 검증 오류
+    VALIDATION_ERROR("20003","입력값 오류", HttpStatus.INTERNAL_SERVER_ERROR),
+
     // 그 외 기타 오류
     INTERNAL_SERVER_ERROR("5000", "내부 서버 오류입니다." ,HttpStatus.INTERNAL_SERVER_ERROR);
 
