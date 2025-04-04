@@ -51,4 +51,51 @@ public class AuthService {
                 .build();
 
     }
+
+    public TokenResponse refreshToken(String providedRefreshToken) {
+        // 리프레시 토큰 유효성 검사
+        jwtTokenProvider.validateToken(providedRefreshToken);
+        String username = jwtTokenProvider.getUsernameFromJWT(providedRefreshToken);
+
+        // 저장 된 refresh token 조회
+        RefreshToken storedToken = refreshTokenRepository.findById(username)
+                .orElseThrow(() -> new BadCredentialsException("해당 유저로 조회되는 리프레시 토큰 없음"));
+
+        // 넘어온 리프레시 토큰 값과의 일치 확인
+        if(!storedToken.getToken().equals(providedRefreshToken)) {
+            throw new BadCredentialsException("리프레시 토큰 일치하지 않음");
+        }
+
+        // DB에 저장 된 만료일과 현재 시간 비교 (추가 검증)
+        if(storedToken.getExpiryDate().before(new Date())) {
+            throw new BadCredentialsException("리프레시 토큰 유효시간 만료");
+        }
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadCredentialsException("해당 리프레시 토큰을 위한 유저 없음"));
+
+        // 새로운 토큰 재발급
+        String accessToken = jwtTokenProvider.createToken(user.getUsername(), user.getRole().name());
+        String refreshToken = jwtTokenProvider.createRefreshToken(user.getUsername(), user.getRole().name());;
+
+        RefreshToken tokenEntity = RefreshToken.builder()
+                .username(user.getUsername())
+                .token(refreshToken)
+                .expiryDate(new Date(System.currentTimeMillis() + jwtTokenProvider.getRefreshExpiration()))
+                .build();
+
+        refreshTokenRepository.save(tokenEntity);
+
+        return TokenResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
+    public void logout(String refreshToken) {
+        // refresh token의 서명 및 만료 검증
+        jwtTokenProvider.validateToken(refreshToken);
+        String username = jwtTokenProvider.getUsernameFromJWT(refreshToken);
+        refreshTokenRepository.deleteById(username);    // DB에 저장 된 refresh token 삭제
+    }
 }

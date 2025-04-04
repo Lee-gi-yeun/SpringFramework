@@ -49,7 +49,7 @@ public class SecurityConfig {
                                 .accessDeniedHandler(restAccessDeniedHandler))     // 인가 실패
                 // 요청 http method, url 기준으로 인증, 인가 필요 여부 설정
                 .authorizeHttpRequests(auth->
-                        auth.requestMatchers(HttpMethod.POST, "/api/v1/users","/api/v1/auth/login").permitAll()
+                        auth.requestMatchers(HttpMethod.POST, "/api/v1/users","/api/v1/auth/login","/api/v1/auth/refresh").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/users/me").hasAuthority("USER")
                                 .anyRequest().authenticated())
                 // 커스텀 인증 필터(JWT 토큰 사용하여 확인)를 인증 필터 앞에 삽입
