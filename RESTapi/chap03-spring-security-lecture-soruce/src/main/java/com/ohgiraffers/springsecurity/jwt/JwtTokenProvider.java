@@ -1,10 +1,12 @@
 package com.ohgiraffers.springsecurity.jwt;
 
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SecurityException;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -58,5 +60,30 @@ public class JwtTokenProvider {
 
     public long getRefreshExpiration() {
         return jwtRefreshExpiration;
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
+            return true;
+        } catch (SecurityException | MalformedJwtException e) {
+            throw new BadCredentialsException("Invalid JWT Token", e);
+        } catch (ExpiredJwtException e) {
+            throw new BadCredentialsException("Expired JWT Token", e);
+        } catch (UnsupportedJwtException e) {
+            throw new BadCredentialsException("Unsupported JWT Token", e);
+        } catch (IllegalArgumentException e) {
+            throw new BadCredentialsException("JWT Token claims empty", e);
+        }
+    }
+
+
+    public String getUsernameFromJWT(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        return claims.getSubject();
     }
 }
