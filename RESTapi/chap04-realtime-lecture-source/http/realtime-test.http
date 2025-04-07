@@ -1,0 +1,20 @@
+### polling
+GET http://localhost:8080/polling/notifications
+
+### long polling
+POST http://localhost:8080/long-polling/order-status/update
+Content-Type: application/json
+
+{
+  "userId": "user1",
+  "status": "배송 완료"
+}
+
+### sse
+POST http://localhost:8080/sse/friend-request/send
+Content-Type: application/json
+
+{
+"fromUser":"user42",
+"toUser":"user1"
+}
