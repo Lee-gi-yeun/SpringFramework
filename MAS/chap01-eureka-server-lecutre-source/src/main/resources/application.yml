@@ -1,0 +1,14 @@
+# Eureka Server에서 일반적으로 사용하는 port 값(변경 시 추가 설정 필요)
+server:
+  port: 8761
+
+# Eureka Server는 자기자신이 Server 이기 때문에 Server에 등록하지 않기 위해
+# register-with-eureka: false라고 설정하며
+# 다른 서비스를 주기적으로 갱신해서 인지하기 위한 설정도 fetch-registry: false 로 설정한다
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka
