@@ -1,16 +1,15 @@
-package com.ohgiraffers.firstservice;
+package com.ohgiraffers.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
-// 해당 어플리케이션을 서비스 발견 클라이언트로 설정하는 어노테이션
 @EnableDiscoveryClient
-public class Chap02FirstServiceLectureSoruceApplication {
+public class Chap03GatewayLectureSourceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Chap02FirstServiceLectureSoruceApplication.class, args);
+        SpringApplication.run(Chap03GatewayLectureSourceApplication.class, args);
     }
 
 }
