@@ -1,3 +1,4 @@
+
 package com.ohgiraffers.orderservice.config;
 
 import feign.RequestInterceptor;
@@ -19,16 +20,25 @@ public class FeignClientConfig {
 
             if(requestAttributes != null) {
 
+                // 1. Gateway를 요청하는 상황
                 /* 현재 요청의 Authorization 헤더 추출 (Bearer 토큰) */
-                String authorizationHeader = requestAttributes
-                        .getRequest()           // request 객체 추출
+/*                String authorizationHeader = requestAttributes
+                        .getRequest()
                         .getHeader(HttpHeaders.AUTHORIZATION);
+
 
                 if(authorizationHeader != null) {       // 토큰을 들고 왔다면
 
-                    /* Feign client 요청에 "Authorization" 헤더 추가 */
+                    *//* Feign client 요청에 "Authorization" 헤더 추가 *//*
                     requestTemplate.header(HttpHeaders.AUTHORIZATION, authorizationHeader);
-                }
+
+                }*/
+
+                // 2. 내부 user service를 요청하는 상황
+                String userId = requestAttributes.getRequest().getHeader("X-User-Id");
+                String role = requestAttributes.getRequest().getHeader("X-User-Role");
+                requestTemplate.header("X-User-Id", userId);
+                requestTemplate.header("X-User-Role", role);
             }
         };
     }

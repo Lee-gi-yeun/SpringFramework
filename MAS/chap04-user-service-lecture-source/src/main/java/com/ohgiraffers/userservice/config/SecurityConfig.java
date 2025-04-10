@@ -42,6 +42,7 @@ public class SecurityConfig {
         )
         .authorizeHttpRequests(auth ->
                 auth.requestMatchers(HttpMethod.POST, "/users", "/auth/login", "/auth/refresh").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/users/me").hasAuthority("USER")
                         .anyRequest().authenticated()
         )
